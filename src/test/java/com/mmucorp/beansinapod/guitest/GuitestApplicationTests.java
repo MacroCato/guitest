@@ -1,0 +1,77 @@
+package com.mmucorp.beansinapod.guitest;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class GuitestApplicationTests {
+	private static final String baseURL = "http://localhost:3000/Login";
+
+	private WebDriver driver;
+		
+	public GuitestApplicationTests() {
+		driver = new ChromeDriver();
+	}
+	
+	@Before
+	public void openDriver() {
+		driver.get(baseURL);
+	}
+	
+	@After
+	public void closeDriver() {
+		driver.close();
+	}
+	
+	@Test
+	public void WhenLoginWithIncorrectUserNameThenErrorDisplayed() {
+		LoginPage page = new LoginPage(driver);
+		page.setEmail("test@example.com");
+		page.setPassword("wrongpassword");
+		page.clickLoginButton();
+		Assert.assertEquals("Login failed. Invalid email or password.", page.getLoginError());
+	}
+
+	@Test
+	public void WhenLoginWithIncorrectPasswordThenErrorDisplayed() {
+		LoginPage page = new LoginPage(driver);
+		page.setEmail("sonic@sega.com");
+		page.setPassword("wrongpassword");
+		page.clickLoginButton();
+		Assert.assertEquals("Login failed. Invalid email or password.", page.getLoginError());
+	}
+
+	@Test
+	public void WhenLoginWithNoEmailEnteredThenValidationErrorDisplayed() {
+		LoginPage page = new LoginPage(driver);
+		page.clearEmail();
+		page.setPassword("password");
+		page.clickLoginButton();
+		Assert.assertEquals("Please fill out this field.", page.getEmailValidationError());
+	}
+
+	@Test
+	public void WhenLoginWithNoPasswordEnteredThenValidationErrorDisplayed() {
+		LoginPage page = new LoginPage(driver);
+		page.clearPassword();
+		page.setEmail("test@example.com");
+		page.clickLoginButton();
+		Assert.assertEquals("Please fill out this field.", page.getPasswordValidationError());
+	}
+
+	@Test
+	public void WhenLoginWithCorrectCredentialRedirectToHomePage() {
+		LoginPage page = new LoginPage(driver);
+		String redirectURL = "http://localhost:3000/home";
+		
+		page.setEmail("sonic@sega.com");
+		page.setPassword("password");
+		page.clickLoginButton();
+
+		Assert.assertEquals(redirectURL, page.getPageRedirect(redirectURL));
+	}
+	
+}
