@@ -1,19 +1,20 @@
-package com.mmucorp.beansinapod.guitest;
+package com.mmucorp.beansinapod.guitest.UI;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import com.mmucorp.beansinapod.guitest.PageObject.LoginPage;
 
 public class GuitestApplicationTests {
-	private static final String baseURL = "http://localhost:3000/Login";
+	private static final String baseURL = "https://localhost:3000/login";
 
 	private WebDriver driver;
 		
 	public GuitestApplicationTests() {
-		driver = new ChromeDriver();
+		driver = new FirefoxDriver();
 	}
 	
 	@Before
@@ -65,7 +66,7 @@ public class GuitestApplicationTests {
 	@Test
 	public void WhenLoginWithCorrectCredentialRedirectToHomePage() {
 		LoginPage page = new LoginPage(driver);
-		String redirectURL = "http://localhost:3000/home";
+		String redirectURL = "https://localhost:3000/home";
 		
 		page.setEmail("sonic@sega.com");
 		page.setPassword("password");

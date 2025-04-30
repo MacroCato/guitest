@@ -1,4 +1,4 @@
-package com.mmucorp.beansinapod.guitest;
+package com.mmucorp.beansinapod.guitest.PageObject;
 
 
 import org.openqa.selenium.By;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 
-class LoginPage {
+public class LoginPage {
 	private WebDriver driver;
 	private WebDriverWait waiter;
 	
